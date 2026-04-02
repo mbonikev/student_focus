@@ -55,7 +55,6 @@ export default function SettingsPage() {
   const suggestedLabel = systemTheme === "dark" ? "Dark themes" : "Light themes";
   const otherLabel = systemTheme === "dark" ? "Light themes" : "Dark themes";
 
-  const selectedFont = fonts.find((f) => f.id === fontId)!;
 
   const handleThemeClick = (t: (typeof themes)[0]) => {
     if (t.mode === "light") setLightTheme(t.id as ThemeId);
@@ -199,18 +198,6 @@ export default function SettingsPage() {
           </div>
         </section>
 
-        {/* Preview */}
-        <section>
-          <SectionTitle>Font Preview</SectionTitle>
-          <div className="border p-5 flex flex-col gap-2" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
-            <p className="text-lg font-semibold" style={{ fontFamily: `var(${selectedFont.variable})`, color: "var(--text)" }}>
-              The quick brown fox jumps over the lazy dog
-            </p>
-            <p className="text-sm" style={{ fontFamily: `var(${selectedFont.variable})`, color: "var(--text-muted)" }}>
-              0123456789 — {selectedFont.label}
-            </p>
-          </div>
-        </section>
       </div>
     </PageShell>
   );
