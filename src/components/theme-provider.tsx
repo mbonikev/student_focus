@@ -5,30 +5,30 @@ import { useAppStore } from "@/store/app-store";
 import { fonts } from "@/lib/themes";
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const { themeId, fontId, setSystemTheme } = useAppStore();
+  const { lightThemeId, darkThemeId, fontId, systemTheme, setSystemTheme, activeThemeId } =
+    useAppStore();
 
-  /* Apply theme to <html> data-theme attribute */
+  /* Apply active theme to <html> whenever lightThemeId, darkThemeId, or systemTheme changes */
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", themeId);
-  }, [themeId]);
+    document.documentElement.setAttribute("data-theme", activeThemeId());
+  }, [lightThemeId, darkThemeId, systemTheme, activeThemeId]);
 
-  /* Apply font CSS variable */
+  /* Apply chosen font as CSS variable on body */
   useEffect(() => {
     const font = fonts.find((f) => f.id === fontId);
     if (font) {
-      document.body.style.setProperty(
-        "--app-font",
-        `var(${font.variable})`
-      );
+      document.body.style.setProperty("--app-font", `var(${font.variable})`);
     }
   }, [fontId]);
 
-  /* Listen for system color scheme */
+  /* Track system color-scheme — triggers theme switch automatically */
   useEffect(() => {
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
     setSystemTheme(mq.matches ? "dark" : "light");
-    const handler = (e: MediaQueryListEvent) =>
+
+    const handler = (e: MediaQueryListEvent) => {
       setSystemTheme(e.matches ? "dark" : "light");
+    };
     mq.addEventListener("change", handler);
     return () => mq.removeEventListener("change", handler);
   }, [setSystemTheme]);
