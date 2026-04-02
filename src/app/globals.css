@@ -1,0 +1,270 @@
+@import "tailwindcss";
+
+/* ============================================================
+   FONT VARIABLES
+   ============================================================ */
+@theme inline {
+  --font-inter: var(--font-inter);
+  --font-jetbrains: var(--font-jetbrains-mono);
+  --font-space-grotesk: var(--font-space-grotesk);
+  --font-geist: var(--font-geist-sans);
+  --font-geist-mono: var(--font-geist-mono);
+  --font-plus-jakarta: var(--font-plus-jakarta);
+  --font-ibm-plex: var(--font-ibm-plex-mono);
+}
+
+/* ============================================================
+   LIGHT THEMES
+   ============================================================ */
+
+/* Theme: Default (Light) */
+[data-theme="light-default"] {
+  --bg: #f5f5f5;
+  --bg-subtle: #ebebeb;
+  --bg-muted: #e0e0e0;
+  --surface: #ffffff;
+  --surface-raised: #fafafa;
+  --border: #d4d4d4;
+  --border-strong: #a3a3a3;
+  --text: #0a0a0a;
+  --text-muted: #525252;
+  --text-subtle: #737373;
+  --accent: #1a1a1a;
+  --accent-fg: #ffffff;
+  --accent2: #404040;
+  --red: #dc2626;
+  --green: #16a34a;
+  --yellow: #ca8a04;
+  --blue: #2563eb;
+}
+
+/* Theme: Warm (Light) */
+[data-theme="light-warm"] {
+  --bg: #faf7f2;
+  --bg-subtle: #f3ede3;
+  --bg-muted: #e8dfd0;
+  --surface: #fffdf9;
+  --surface-raised: #fdf9f3;
+  --border: #d4c4a8;
+  --border-strong: #b8a080;
+  --text: #1c1410;
+  --text-muted: #5c4a35;
+  --text-subtle: #8a6f55;
+  --accent: #8b4513;
+  --accent-fg: #ffffff;
+  --accent2: #6b3410;
+  --red: #c0392b;
+  --green: #27ae60;
+  --yellow: #d4a017;
+  --blue: #2980b9;
+}
+
+/* Theme: Cool (Light) */
+[data-theme="light-cool"] {
+  --bg: #f0f4f8;
+  --bg-subtle: #e4ecf4;
+  --bg-muted: #d4e4f0;
+  --surface: #f8fafc;
+  --surface-raised: #f4f8fb;
+  --border: #b8d0e8;
+  --border-strong: #7aadcc;
+  --text: #0d1b2a;
+  --text-muted: #2d5a7b;
+  --text-subtle: #4a7fa0;
+  --accent: #0369a1;
+  --accent-fg: #ffffff;
+  --accent2: #0284c7;
+  --red: #dc2626;
+  --green: #16a34a;
+  --yellow: #ca8a04;
+  --blue: #0369a1;
+}
+
+/* Theme: Mint (Light) */
+[data-theme="light-mint"] {
+  --bg: #f0faf4;
+  --bg-subtle: #e4f4eb;
+  --bg-muted: #d0ebd8;
+  --surface: #f8fcfa;
+  --surface-raised: #f2faf5;
+  --border: #b4dcc4;
+  --border-strong: #7abf94;
+  --text: #0a1f14;
+  --text-muted: #2a5c3f;
+  --text-subtle: #4a8c62;
+  --accent: #166534;
+  --accent-fg: #ffffff;
+  --accent2: #15803d;
+  --red: #dc2626;
+  --green: #15803d;
+  --yellow: #ca8a04;
+  --blue: #2563eb;
+}
+
+/* ============================================================
+   DARK THEMES
+   ============================================================ */
+
+/* Theme: Default (Dark) */
+[data-theme="dark-default"] {
+  --bg: #0a0a0a;
+  --bg-subtle: #141414;
+  --bg-muted: #1f1f1f;
+  --surface: #111111;
+  --surface-raised: #1a1a1a;
+  --border: #2a2a2a;
+  --border-strong: #404040;
+  --text: #fafafa;
+  --text-muted: #a3a3a3;
+  --text-subtle: #737373;
+  --accent: #e5e5e5;
+  --accent-fg: #0a0a0a;
+  --accent2: #d4d4d4;
+  --red: #f87171;
+  --green: #4ade80;
+  --yellow: #fbbf24;
+  --blue: #60a5fa;
+}
+
+/* Theme: Midnight (Dark) */
+[data-theme="dark-midnight"] {
+  --bg: #050510;
+  --bg-subtle: #0d0d1f;
+  --bg-muted: #151530;
+  --surface: #0a0a1a;
+  --surface-raised: #12122a;
+  --border: #1e1e40;
+  --border-strong: #3030608a;
+  --text: #e8e8ff;
+  --text-muted: #8080c0;
+  --text-subtle: #5050a0;
+  --accent: #7c7cff;
+  --accent-fg: #050510;
+  --accent2: #9090ff;
+  --red: #ff6b6b;
+  --green: #6bffb0;
+  --yellow: #ffd06b;
+  --blue: #6baeff;
+}
+
+/* Theme: Ember (Dark) */
+[data-theme="dark-ember"] {
+  --bg: #0f0800;
+  --bg-subtle: #1a1000;
+  --bg-muted: #261800;
+  --surface: #130c00;
+  --surface-raised: #1c1400;
+  --border: #301e00;
+  --border-strong: #4a3000;
+  --text: #fff8f0;
+  --text-muted: #c09060;
+  --text-subtle: #8a6030;
+  --accent: #ff8c00;
+  --accent-fg: #0f0800;
+  --accent2: #e67a00;
+  --red: #ff5c5c;
+  --green: #7dde86;
+  --yellow: #ffc94a;
+  --blue: #64b5f6;
+}
+
+/* Theme: Forest (Dark) */
+[data-theme="dark-forest"] {
+  --bg: #060f08;
+  --bg-subtle: #0d1a10;
+  --bg-muted: #142018;
+  --surface: #091209;
+  --surface-raised: #111a12;
+  --border: #1c3020;
+  --border-strong: #2e4a34;
+  --text: #e8f5ea;
+  --text-muted: #80b888;
+  --text-subtle: #508858;
+  --accent: #4ade80;
+  --accent-fg: #060f08;
+  --accent2: #22c55e;
+  --red: #f87171;
+  --green: #4ade80;
+  --yellow: #fbbf24;
+  --blue: #60a5fa;
+}
+
+/* ============================================================
+   BASE STYLES
+   ============================================================ */
+:root {
+  color-scheme: light dark;
+}
+
+* {
+  border-radius: 0 !important;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--app-font, var(--font-inter, system-ui, sans-serif));
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-muted);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-subtle);
+}
+
+/* ============================================================
+   SELECTION
+   ============================================================ */
+::selection {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
+/* ============================================================
+   FOCUS RING
+   ============================================================ */
+:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* ============================================================
+   INPUT / SELECT BASE
+   ============================================================ */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2px;
+  background: var(--bg-muted);
+  border: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: var(--accent);
+  cursor: pointer;
+  border-radius: 0 !important;
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
