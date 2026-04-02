@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Loader2 } from "lucide-react";
 
 type Mode = "login" | "signup";
@@ -130,11 +131,24 @@ export default function LoginPage() {
                 color: "var(--text)",
               }}
             />
-            {mode === "signup" && (
-              <p className="text-xs" style={{ color: "var(--text-subtle)" }}>
-                At least 6 characters
-              </p>
-            )}
+            <div className="flex items-center justify-between">
+              {mode === "signup" ? (
+                <p className="text-xs" style={{ color: "var(--text-subtle)" }}>
+                  At least 6 characters
+                </p>
+              ) : (
+                <span />
+              )}
+              {mode === "login" && (
+                <Link
+                  href="/forgot-password"
+                  className="text-xs transition-colors hover:text-[var(--text)]"
+                  style={{ color: "var(--text-subtle)" }}
+                >
+                  Forgot password?
+                </Link>
+              )}
+            </div>
           </div>
 
           {/* Error / Success */}

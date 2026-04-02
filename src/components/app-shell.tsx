@@ -7,7 +7,7 @@ import "overlayscrollbars/overlayscrollbars.css";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isLogin = pathname === "/login";
+  const isLogin = pathname === "/login" || pathname === "/forgot-password" || pathname === "/reset-password";
 
   if (isLogin) {
     return (
