@@ -8,7 +8,7 @@ import {
   CheckSquare,
   FileText,
   BarChart2,
-  Music2,
+  Clock,
   Settings,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -18,7 +18,7 @@ const navItems = [
   { href: "/", icon: Timer, label: "Timer" },
   { href: "/tasks", icon: CheckSquare, label: "Tasks" },
   { href: "/notes", icon: FileText, label: "Notes" },
-  { href: "/sounds", icon: Music2, label: "Sounds" },
+  { href: "/clocks", icon: Clock, label: "Clocks" },
   { href: "/stats", icon: BarChart2, label: "Stats" },
 ];
 
