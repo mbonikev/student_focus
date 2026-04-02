@@ -95,10 +95,12 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {/* Email */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium uppercase tracking-widest" style={{ color: "var(--text-subtle)" }}>
+            <label htmlFor="email" className="text-xs font-medium uppercase tracking-widest" style={{ color: "var(--text-subtle)" }}>
               Email
             </label>
             <input
+              id="email"
+              name="email"
               type="email"
               required
               autoComplete="email"
@@ -115,10 +117,12 @@ export default function LoginPage() {
 
           {/* Password */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium uppercase tracking-widest" style={{ color: "var(--text-subtle)" }}>
+            <label htmlFor="password" className="text-xs font-medium uppercase tracking-widest" style={{ color: "var(--text-subtle)" }}>
               Password
             </label>
             <input
+              id="password"
+              name="password"
               type="password"
               required
               autoComplete={mode === "login" ? "current-password" : "new-password"}

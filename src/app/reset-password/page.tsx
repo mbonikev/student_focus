@@ -160,6 +160,7 @@ export default function ResetPasswordPage() {
                 {/* New password */}
                 <div className="flex flex-col gap-1.5">
                   <label
+                    htmlFor="new-password"
                     className="text-xs font-medium uppercase tracking-widest"
                     style={{ color: "var(--text-subtle)" }}
                   >
@@ -167,6 +168,8 @@ export default function ResetPasswordPage() {
                   </label>
                   <div className="relative">
                     <input
+                      id="new-password"
+                      name="new-password"
                       type={showPw ? "text" : "password"}
                       required
                       autoFocus
@@ -192,12 +195,15 @@ export default function ResetPasswordPage() {
                 {/* Confirm */}
                 <div className="flex flex-col gap-1.5">
                   <label
+                    htmlFor="confirm-password"
                     className="text-xs font-medium uppercase tracking-widest"
                     style={{ color: "var(--text-subtle)" }}
                   >
                     Confirm password
                   </label>
                   <input
+                    id="confirm-password"
+                    name="confirm-password"
                     type={showPw ? "text" : "password"}
                     required
                     autoComplete="new-password"

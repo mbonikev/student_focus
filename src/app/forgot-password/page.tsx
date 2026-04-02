@@ -116,12 +116,15 @@ export default function ForgotPasswordPage() {
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <div className="flex flex-col gap-1.5">
                   <label
+                    htmlFor="email"
                     className="text-xs font-medium uppercase tracking-widest"
                     style={{ color: "var(--text-subtle)" }}
                   >
                     Email
                   </label>
                   <input
+                    id="email"
+                    name="email"
                     type="email"
                     required
                     autoFocus
