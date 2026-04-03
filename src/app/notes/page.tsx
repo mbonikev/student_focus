@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Trash2, FileText } from "lucide-react";
+import { Plus, Trash2, FileText, ArrowLeft } from "lucide-react";
 import { useAppStore } from "@/store/app-store";
 import { useNoteSync } from "@/hooks/use-db-sync";
 import { PageShell } from "@/components/page-shell";
@@ -11,6 +11,7 @@ export default function NotesPage() {
   const { notes } = useAppStore();
   const { add, update, remove } = useNoteSync();
   const [activeId, setActiveId] = useState<string | null>(notes[0]?.id ?? null);
+  const [mobileView, setMobileView] = useState<"list" | "editor">("list");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const activeNote = notes.find((n) => n.id === activeId);
@@ -18,19 +19,31 @@ export default function NotesPage() {
   const handleNew = () => {
     const id = add();
     setActiveId(id);
+    setMobileView("editor");
+  };
+
+  const handleSelectNote = (id: string) => {
+    setActiveId(id);
+    setMobileView("editor");
   };
 
   useEffect(() => {
     if (activeId) textareaRef.current?.focus();
   }, [activeId]);
 
-  const formatDate = (ts: number) => new Date(ts).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  const formatDate = (ts: number) =>
+    new Date(ts).toLocaleDateString("en-US", { month: "short", day: "numeric" });
 
   return (
     <PageShell className="h-full flex">
       {/* Note list sidebar */}
       <div
-        className="w-52 shrink-0 border-r flex flex-col"
+        className={[
+          "shrink-0 border-r flex flex-col",
+          // mobile: full width, hidden when editor is open
+          "w-full md:w-52",
+          mobileView === "editor" ? "hidden md:flex" : "flex",
+        ].join(" ")}
         style={{ borderColor: "var(--border)", background: "var(--surface)" }}
       >
         <div
@@ -62,7 +75,7 @@ export default function NotesPage() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -8 }}
                   transition={{ duration: 0.15 }}
-                  onClick={() => setActiveId(note.id)}
+                  onClick={() => handleSelectNote(note.id)}
                   className="w-full text-left px-4 py-3 border-b transition-colors duration-100"
                   style={{
                     borderColor: "var(--border)",
@@ -85,13 +98,26 @@ export default function NotesPage() {
       </div>
 
       {/* Editor */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div
+        className={[
+          "flex-1 flex flex-col min-w-0",
+          mobileView === "list" ? "hidden md:flex" : "flex",
+        ].join(" ")}
+      >
         {activeNote ? (
           <>
             <div
-              className="px-6 py-3 border-b flex items-center gap-3 shrink-0"
+              className="px-4 md:px-6 py-3 border-b flex items-center gap-3 shrink-0"
               style={{ borderColor: "var(--border)", background: "var(--surface)" }}
             >
+              {/* Back button — mobile only */}
+              <button
+                onClick={() => setMobileView("list")}
+                className="md:hidden flex items-center justify-center w-6 h-6 hover:bg-[var(--bg-muted)] transition-colors shrink-0"
+                style={{ color: "var(--text-muted)" }}
+              >
+                <ArrowLeft size={14} />
+              </button>
               <input
                 type="text"
                 value={activeNote.title}
@@ -106,6 +132,7 @@ export default function NotesPage() {
                   remove(activeNote.id);
                   const remaining = notes.filter((n) => n.id !== activeId);
                   setActiveId(remaining[Math.max(0, idx - 1)]?.id ?? null);
+                  setMobileView("list");
                 }}
                 className="hover:text-[var(--red)] transition-colors"
                 style={{ color: "var(--text-subtle)" }}
@@ -118,11 +145,11 @@ export default function NotesPage() {
               value={activeNote.content}
               onChange={(e) => update(activeNote.id, { content: e.target.value })}
               placeholder="Start writing..."
-              className="flex-1 resize-none bg-transparent outline-none p-6 text-sm leading-relaxed"
+              className="flex-1 resize-none bg-transparent outline-none p-4 md:p-6 text-sm leading-relaxed"
               style={{ color: "var(--text)", caretColor: "var(--accent)" }}
             />
             <div
-              className="px-6 py-2 border-t text-xs shrink-0"
+              className="px-4 md:px-6 py-2 border-t text-xs shrink-0"
               style={{ borderColor: "var(--border)", color: "var(--text-subtle)", background: "var(--surface)" }}
             >
               {activeNote.content.split(/\s+/).filter(Boolean).length} words · {activeNote.content.length} chars
