@@ -51,6 +51,7 @@ interface AppState {
   longBreakInterval: number;
   autoStartBreaks: boolean;
   autoStartPomodoros: boolean;
+  addMinutesDuration: number;
   setTimerSettings: (
     s: Partial<
       Pick<
@@ -61,6 +62,7 @@ interface AppState {
         | "longBreakInterval"
         | "autoStartBreaks"
         | "autoStartPomodoros"
+        | "addMinutesDuration"
       >
     >
   ) => void;
@@ -129,6 +131,7 @@ export const useAppStore = create<AppState>()(
       longBreakInterval: 4,
       autoStartBreaks: false,
       autoStartPomodoros: false,
+      addMinutesDuration: 5,
       setTimerSettings: (s) => set(s),
 
       /* Tasks */

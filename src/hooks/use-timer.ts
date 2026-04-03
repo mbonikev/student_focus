@@ -63,6 +63,7 @@ export function useTimer() {
     longBreakInterval,
     autoStartBreaks,
     autoStartPomodoros,
+    addMinutesDuration,
     recordSession,
     incrementTaskPomodoro,
     incrementDailyPomodoros,
@@ -166,6 +167,8 @@ export function useTimer() {
     setRunning(false);
     setSecondsLeft(getDuration(mode));
   };
+  const addMinutes = () =>
+    setSecondsLeft(useTimerStore.getState().secondsLeft + addMinutesDuration * 60);
 
   return {
     mode,
@@ -173,8 +176,10 @@ export function useTimer() {
     secondsLeft,
     sessionCount,
     alertVisible,
+    addMinutesDuration,
     switchMode,
     dismissAlert,
+    addMinutes,
     toggle,
     reset,
     getDuration,
