@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, RotateCcw, ChevronRight } from "lucide-react";
+import { useEffect, useRef } from "react";
 import { useTimer } from "@/hooks/use-timer";
 import { useAppStore } from "@/store/app-store";
 import { formatTime } from "@/lib/utils";
@@ -15,9 +16,53 @@ const modeLabels: Record<TimerMode, string> = {
   long: "Long Break",
 };
 
+const alertLabels: Record<TimerMode, string> = {
+  focus: "Focus session complete!",
+  short: "Short break over!",
+  long: "Long break over!",
+};
+
 export default function TimerPage() {
-  const { mode, running, secondsLeft, sessionCount, switchMode, toggle, reset, getDuration } =
+  const { mode, running, secondsLeft, sessionCount, alertVisible, switchMode, dismissAlert, toggle, reset, getDuration } =
     useTimer();
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const alertStartRef = useRef<number>(0);
+
+  useEffect(() => {
+    if (alertVisible) {
+      alertStartRef.current = Date.now();
+      const audio = new Audio("/sounds/alert.mp3");
+      audio.loop = true;
+      audio.play().catch(() => {});
+      audioRef.current = audio;
+    } else {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    }
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, [alertVisible]);
+
+  function handleDismiss() {
+    const elapsed = Date.now() - alertStartRef.current;
+    const remaining = Math.max(0, 15000 - elapsed);
+    if (remaining > 0) {
+      setTimeout(() => {
+        if (audioRef.current) {
+          audioRef.current.pause();
+          audioRef.current = null;
+        }
+      }, remaining);
+    }
+    dismissAlert();
+  }
   const { tasks, activeTaskId, setActiveTask, dailyPomodoros } = useAppStore();
 
   const total = getDuration(mode);
@@ -165,6 +210,59 @@ export default function TimerPage() {
           )}
         </div>
       </div>
+
+      {/* Alert popup */}
+      <AnimatePresence>
+        {alertVisible && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center"
+            style={{ background: "rgba(0,0,0,0.6)" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <motion.div
+              className="flex flex-col items-center gap-6 p-10 border"
+              style={{
+                background: "var(--surface)",
+                borderColor: "var(--border)",
+                minWidth: 280,
+              }}
+              initial={{ scale: 0.94, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.94, opacity: 0 }}
+              transition={{ duration: 0.18 }}
+            >
+              <div className="flex flex-col items-center gap-2">
+                <span
+                  className="text-xs uppercase tracking-widest font-medium"
+                  style={{ color: "var(--text-subtle)" }}
+                >
+                  {modeLabels[mode]}
+                </span>
+                <span
+                  className="text-xl font-light"
+                  style={{ color: "var(--text)" }}
+                >
+                  {alertLabels[mode]}
+                </span>
+              </div>
+              <button
+                onClick={handleDismiss}
+                className="px-8 py-2 text-sm font-medium border transition-colors duration-150 hover:opacity-80"
+                style={{
+                  background: "var(--accent)",
+                  color: "var(--accent-fg)",
+                  borderColor: "var(--accent)",
+                }}
+              >
+                Dismiss
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </PageShell>
   );
 }
