@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { useAppStore } from "@/store/app-store";
 import { themes, fonts, type ThemeId, type FontId } from "@/lib/themes";
 import { PageShell } from "@/components/page-shell";
@@ -8,6 +9,8 @@ import { usePreferencesSync } from "@/hooks/use-db-sync";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { Monitor, LogOut } from "lucide-react";
+import { WarningModal } from "@/components/warning-modal";
+import { useTimerStore } from "@/hooks/use-timer";
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
@@ -29,6 +32,8 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
 export default function SettingsPage() {
   usePreferencesSync();
   const router = useRouter();
+  const [signOutWarning, setSignOutWarning] = useState(false);
+  const timerRunning = useTimerStore((s) => s.running);
 
   const {
     lightThemeId,
@@ -65,7 +70,15 @@ export default function SettingsPage() {
   const activeForMode = (t: (typeof themes)[0]) =>
     t.mode === "light" ? lightThemeId === t.id : darkThemeId === t.id;
 
-  const handleSignOut = async () => {
+  const handleSignOut = () => {
+    if (timerRunning) {
+      setSignOutWarning(true);
+    } else {
+      doSignOut();
+    }
+  };
+
+  const doSignOut = async () => {
     const supabase = createClient();
     await supabase.auth.signOut();
     router.push("/login");
@@ -203,6 +216,15 @@ export default function SettingsPage() {
         </section>
 
       </div>
+      <WarningModal
+        open={signOutWarning}
+        title="Timer is running"
+        message="You have an active timer. Signing out will stop it. Are you sure you want to continue?"
+        confirmLabel="Sign out"
+        cancelLabel="Cancel"
+        onConfirm={() => { setSignOutWarning(false); doSignOut(); }}
+        onCancel={() => setSignOutWarning(false)}
+      />
     </PageShell>
   );
 }
