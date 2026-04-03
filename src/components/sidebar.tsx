@@ -10,11 +10,13 @@ import {
   BarChart2,
   Clock,
   Settings,
+  HelpCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { useTimerStore } from "@/hooks/use-timer";
 import { WarningModal } from "@/components/warning-modal";
+import { HelpModal } from "@/components/help-modal";
 
 const navItems = [
   { href: "/", icon: Timer, label: "Timer" },
@@ -95,6 +97,7 @@ export function Sidebar() {
   const router = useRouter();
   const timerRunning = useTimerStore((s) => s.running);
   const [pendingHref, setPendingHref] = useState<string | null>(null);
+  const [helpOpen, setHelpOpen] = useState(false);
 
   const handleNavigate = (href: string, e: React.MouseEvent) => {
     const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -145,8 +148,8 @@ export function Sidebar() {
           })}
         </div>
 
-        {/* Settings at bottom */}
-        <div className="px-1.5 pb-2">
+        {/* Settings + Help at bottom */}
+        <div className="px-1.5 pb-2 flex flex-col gap-0.5">
           <NavLink
             href="/settings"
             icon={Settings}
@@ -154,8 +157,19 @@ export function Sidebar() {
             active={pathname.startsWith("/settings")}
             onNavigate={handleNavigate}
           />
+          <div className="relative">
+            <button
+              onClick={() => setHelpOpen(true)}
+              className="relative flex items-center justify-center h-10 w-full transition-colors duration-150 text-[var(--text-subtle)] hover:text-[var(--text-muted)]"
+              title="Help"
+            >
+              <HelpCircle size={16} strokeWidth={1.8} />
+            </button>
+          </div>
         </div>
       </nav>
+
+      <HelpModal open={helpOpen} onClose={() => setHelpOpen(false)} />
 
       <WarningModal
         open={pendingHref !== null}
