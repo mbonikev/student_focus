@@ -23,7 +23,7 @@ const alertLabels: Record<TimerMode, string> = {
 };
 
 export default function TimerPage() {
-  const { mode, running, secondsLeft, sessionCount, alertVisible, switchMode, dismissAlert, toggle, reset, getDuration } =
+  const { mode, running, secondsLeft, sessionCount, alertVisible, addMinutesDuration, switchMode, dismissAlert, addMinutes, toggle, reset, getDuration } =
     useTimer();
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -147,6 +147,22 @@ export default function TimerPage() {
           >
             {running ? <Pause size={20} /> : <Play size={20} />}
           </motion.button>
+          <AnimatePresence>
+            {running && (
+              <motion.button
+                onClick={addMinutes}
+                className="w-10 h-10 flex items-center justify-center border transition-colors duration-150 hover:bg-[var(--bg-muted)] text-xs font-medium"
+                style={{ borderColor: "var(--border)", color: "var(--text-muted)" }}
+                title={`Add ${addMinutesDuration} minutes`}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.15 }}
+              >
+                +{addMinutesDuration}m
+              </motion.button>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Session dots */}

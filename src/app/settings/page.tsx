@@ -45,6 +45,7 @@ export default function SettingsPage() {
     longBreakInterval,
     autoStartBreaks,
     autoStartPomodoros,
+    addMinutesDuration,
     setTimerSettings,
   } = useAppStore();
 
@@ -194,6 +195,9 @@ export default function SettingsPage() {
             </Row>
             <Row label="Auto-start pomodoros">
               <Toggle value={autoStartPomodoros} onChange={(v) => setTimerSettings({ autoStartPomodoros: v })} />
+            </Row>
+            <Row label="Add minutes amount">
+              <DurationControl value={addMinutesDuration} onChange={(v) => setTimerSettings({ addMinutesDuration: v })} min={1} max={30} />
             </Row>
           </div>
         </section>
