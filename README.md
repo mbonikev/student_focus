@@ -4,7 +4,7 @@ A minimal productivity app for students built around the Pomodoro technique. Sta
 
 ---
 
-<!-- SCREENSHOT: Full app overview — timer page in dark mode, sidebar visible -->
+![](./public/screenshots/1.png)
 
 ---
 
@@ -57,7 +57,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### Timer
 
-<!-- SCREENSHOT: Timer page — circular timer, mode tabs at top, session dots, active task widget below -->
+![](./public/screenshots/1.png)
 
 The timer is the core of the app. It follows the Pomodoro technique: work in focused bursts, then rest.
 
@@ -82,7 +82,7 @@ When a session ends an alert sound plays and a popup appears. Click **Dismiss** 
 
 ### Tasks
 
-<!-- SCREENSHOT: Tasks page — mix of active and completed tasks, pomodoro dot indicators visible, one task hovered showing the target and trash icons -->
+![](./public/screenshots/2.png)
 
 Keep track of what needs to get done and estimate how many pomodoros each item will take.
 
@@ -97,7 +97,7 @@ Keep track of what needs to get done and estimate how many pomodoros each item w
 
 ### Notes
 
-<!-- SCREENSHOT: Notes page — two-panel layout, note selected on the left, text visible in the editor, word count in footer -->
+![](./public/screenshots/3.png)
 
 A lightweight editor for anything you need to write down mid-session.
 
@@ -111,7 +111,7 @@ A lightweight editor for anything you need to write down mid-session.
 
 ### Clocks
 
-<!-- SCREENSHOT: Clocks page — 6-clock grid with card labels below, one card mid-hover showing the expand icon -->
+![](./public/screenshots/4.png)
 
 Six clock styles available as standalone widgets or as a fullscreen ambient display.
 
@@ -129,13 +129,13 @@ Six clock styles available as standalone widgets or as a fullscreen ambient disp
 - **Close** — press `Esc` or click *Close*
 - Controls auto-hide after 2.5 seconds; move the mouse to bring them back
 
-<!-- SCREENSHOT: A clock in fullscreen — e.g. macOS clock in dark mode, controls visible at the top -->
+![](./public/screenshots/5.png)
 
 ---
 
 ### Stats
 
-<!-- SCREENSHOT: Stats page — stat cards row and both bar charts with real data filled in -->
+![](./public/screenshots/6.png)
 
 A summary of your study habits over time.
 
@@ -149,7 +149,7 @@ Data is recorded automatically each time a focus session completes.
 
 ### Settings
 
-<!-- SCREENSHOT: Settings page — theme grid visible with one theme selected, timer duration controls below -->
+![](./public/screenshots/7.png)
 
 Accessible from the gear icon at the bottom of the sidebar.
 
