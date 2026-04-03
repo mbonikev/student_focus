@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Loader2 } from "lucide-react";
+import { Loader2, Eye, EyeOff } from "lucide-react";
 
 type Mode = "login" | "signup";
 
@@ -14,6 +14,7 @@ export default function LoginPage() {
   const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -120,21 +121,29 @@ export default function LoginPage() {
             <label htmlFor="password" className="text-xs font-medium uppercase tracking-widest" style={{ color: "var(--text-subtle)" }}>
               Password
             </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              autoComplete={mode === "login" ? "current-password" : "new-password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="w-full px-3 py-2.5 text-sm border bg-transparent outline-none transition-colors"
-              style={{
-                borderColor: "var(--border)",
-                color: "var(--text)",
-              }}
-            />
+            <div className="relative">
+              <input
+                id="password"
+                name="password"
+                type={showPw ? "text" : "password"}
+                required
+                autoComplete={mode === "login" ? "current-password" : "new-password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                className="w-full px-3 py-2.5 pr-10 text-sm border bg-transparent outline-none transition-colors"
+                style={{ borderColor: "var(--border)", color: "var(--text)" }}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPw((v) => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 transition-colors hover:text-[var(--text)]"
+                style={{ color: "var(--text-subtle)" }}
+                tabIndex={-1}
+              >
+                {showPw ? <EyeOff size={14} /> : <Eye size={14} />}
+              </button>
+            </div>
             <div className="flex items-center justify-between">
               {mode === "signup" ? (
                 <p className="text-xs" style={{ color: "var(--text-subtle)" }}>

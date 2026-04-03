@@ -201,18 +201,29 @@ export default function ResetPasswordPage() {
                   >
                     Confirm password
                   </label>
-                  <input
-                    id="confirm-password"
-                    name="confirm-password"
-                    type={showPw ? "text" : "password"}
-                    required
-                    autoComplete="new-password"
-                    value={confirm}
-                    onChange={(e) => setConfirm(e.target.value)}
-                    placeholder="••••••••"
-                    className="w-full px-3 py-2.5 text-sm border bg-transparent outline-none"
-                    style={{ borderColor: "var(--border)", color: "var(--text)" }}
-                  />
+                  <div className="relative">
+                    <input
+                      id="confirm-password"
+                      name="confirm-password"
+                      type={showPw ? "text" : "password"}
+                      required
+                      autoComplete="new-password"
+                      value={confirm}
+                      onChange={(e) => setConfirm(e.target.value)}
+                      placeholder="••••••••"
+                      className="w-full px-3 py-2.5 pr-10 text-sm border bg-transparent outline-none"
+                      style={{ borderColor: "var(--border)", color: "var(--text)" }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPw((v) => !v)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 transition-colors hover:text-[var(--text)]"
+                      style={{ color: "var(--text-subtle)" }}
+                      tabIndex={-1}
+                    >
+                      {showPw ? <EyeOff size={14} /> : <Eye size={14} />}
+                    </button>
+                  </div>
                 </div>
 
                 {/* Strength indicator */}
