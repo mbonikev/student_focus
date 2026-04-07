@@ -113,6 +113,12 @@ export function SettingsModal({ open, onClose, settings, update }: Props) {
                   checked={settings.showDate}
                   onChange={(v) => update({ showDate: v })}
                 />
+                <SettingRow
+                  label="Autohide Buttons"
+                  description="Auto-hide toolbar in fullscreen"
+                  checked={settings.ghostMode}
+                  onChange={(v) => update({ ghostMode: v })}
+                />
               </div>
             </motion.div>
           </div>
@@ -124,10 +130,12 @@ export function SettingsModal({ open, onClose, settings, update }: Props) {
 
 function SettingRow({
   label,
+  description,
   checked,
   onChange,
 }: {
   label: string;
+  description?: string;
   checked: boolean;
   onChange: (v: boolean) => void;
 }) {
@@ -139,17 +147,31 @@ function SettingRow({
         justifyContent: "space-between",
         padding: "0.85rem 1.4rem",
         borderBottom: "1px solid var(--ck-border)",
+        gap: "1rem",
       }}
     >
-      <span
-        style={{
-          fontFamily: "var(--font-inter, system-ui)",
-          fontSize: "0.875rem",
-          color: "var(--ck-text)",
-        }}
-      >
-        {label}
-      </span>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.15rem" }}>
+        <span
+          style={{
+            fontFamily: "var(--font-inter, system-ui)",
+            fontSize: "0.875rem",
+            color: "var(--ck-text)",
+          }}
+        >
+          {label}
+        </span>
+        {description && (
+          <span
+            style={{
+              fontFamily: "var(--font-inter, system-ui)",
+              fontSize: "0.72rem",
+              color: "var(--ck-muted)",
+            }}
+          >
+            {description}
+          </span>
+        )}
+      </div>
       <Switch checked={checked} onChange={onChange} />
     </div>
   );

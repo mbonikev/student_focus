@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { motion } from "framer-motion";
 import { Sun, Moon, Maximize2, Minimize2, LayoutGrid, Globe, PaintBucket, PaintRoller, Settings } from "lucide-react";
 import { useSettings } from "@/hooks/useSettings";
@@ -18,6 +18,8 @@ export default function Page() {
   const [showTimezone, setShowTimezone] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const toolbarRef = useRef<HTMLDivElement>(null);
+  const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Apply data-theme and data-clock to <html> so CSS variables resolve correctly
   useEffect(() => {
@@ -26,12 +28,55 @@ export default function Page() {
     document.documentElement.dataset.clock = settings.clockLayout;
   }, [settings.theme, settings.clockLayout, mounted]);
 
-  // Track fullscreen state
+  // Track fullscreen state — covers both Fullscreen API and F11 browser fullscreen
   useEffect(() => {
-    const handler = () => setIsFullscreen(!!document.fullscreenElement);
-    document.addEventListener("fullscreenchange", handler);
-    return () => document.removeEventListener("fullscreenchange", handler);
+    const check = () => {
+      const apiFullscreen = !!document.fullscreenElement;
+      const f11Fullscreen = window.innerHeight >= screen.height;
+      setIsFullscreen(apiFullscreen || f11Fullscreen);
+    };
+    check();
+    document.addEventListener("fullscreenchange", check);
+    window.addEventListener("resize", check);
+    return () => {
+      document.removeEventListener("fullscreenchange", check);
+      window.removeEventListener("resize", check);
+    };
   }, []);
+
+  // Ghost mode: directly manipulate the toolbar DOM node to avoid React re-renders
+  useEffect(() => {
+    const toolbar = toolbarRef.current;
+    if (!toolbar) return;
+
+    if (!settings.ghostMode || !isFullscreen) {
+      toolbar.style.opacity = "1";
+      toolbar.style.pointerEvents = "auto";
+      if (idleTimer.current) clearTimeout(idleTimer.current);
+      return;
+    }
+
+    const hide = () => {
+      toolbar.style.opacity = "0";
+      toolbar.style.pointerEvents = "none";
+    };
+
+    const show = () => {
+      toolbar.style.opacity = "1";
+      toolbar.style.pointerEvents = "auto";
+      if (idleTimer.current) clearTimeout(idleTimer.current);
+      idleTimer.current = setTimeout(hide, 2000);
+    };
+
+    idleTimer.current = setTimeout(hide, 2000);
+    window.addEventListener("mousemove", show);
+    window.addEventListener("mousedown", show);
+    return () => {
+      window.removeEventListener("mousemove", show);
+      window.removeEventListener("mousedown", show);
+      if (idleTimer.current) clearTimeout(idleTimer.current);
+    };
+  }, [settings.ghostMode, isFullscreen]);
 
   const toggleFullscreen = useCallback(() => {
     if (!document.fullscreenElement) {
@@ -51,8 +96,9 @@ export default function Page() {
       {/* Clock */}
       <ClockMinimal clock={clock} showDate={settings.showDate} />
 
-      {/* Floating toolbar — bottom-right */}
+      {/* Floating toolbar — bottom-center */}
       <div
+        ref={toolbarRef}
         style={{
           position: "fixed",
           bottom: "1.75rem",
@@ -62,6 +108,8 @@ export default function Page() {
           flexDirection: "row",
           gap: "0.45rem",
           zIndex: 50,
+          opacity: 1,
+          transition: "opacity 0.4s ease",
         }}
       >
         <ToolButton

@@ -10,6 +10,7 @@ export interface Settings {
   clockLayout: ClockLayout;
   timezone: string;
   showDate: boolean;
+  ghostMode: boolean;
 }
 
 const STORAGE_KEY = "special-clocks";
@@ -19,6 +20,7 @@ const DEFAULT: Settings = {
   clockLayout: "minimal",
   timezone: "UTC",
   showDate: true,
+  ghostMode: false,
 };
 
 export function useSettings() {
@@ -31,7 +33,8 @@ export function useSettings() {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw) as Partial<Settings>;
-        setSettings({ ...DEFAULT, timezone: browserTz, ...parsed });
+        // Honor saved timezone exactly; only fall back to browser tz if it was never saved
+        setSettings({ ...DEFAULT, ...parsed, timezone: parsed.timezone ?? browserTz });
       } else {
         setSettings({ ...DEFAULT, timezone: browserTz });
       }

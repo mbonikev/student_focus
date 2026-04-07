@@ -27,8 +27,8 @@ export function ClockMinimal({ clock, preview, showDate = true }: Props) {
       <div
         style={{
           fontFamily: "var(--font-mono, monospace)",
-          fontSize: "min(20cqw, 22cqh)",
-          fontWeight: 200,
+          fontSize: "min(26cqw, 28cqh)",
+          fontWeight:400,
           letterSpacing: "-0.04em",
           lineHeight: 1,
           color: "var(--ck-text)",
