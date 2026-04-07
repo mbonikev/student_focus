@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Sun, Moon, Maximize2, Minimize2, LayoutGrid, Globe } from "lucide-react";
+import { Sun, Moon, Maximize2, Minimize2, LayoutGrid, Globe, PaintBucket, PaintRoller } from "lucide-react";
 import { useSettings } from "@/hooks/useSettings";
 import { useClockTime } from "@/hooks/useClockTime";
 import { ClockMinimal } from "@/components/clocks/ClockMinimal";
@@ -66,22 +66,22 @@ export default function Page() {
           title={settings.theme === "dark" ? "Light mode" : "Dark mode"}
           onClick={() => update({ theme: settings.theme === "dark" ? "light" : "dark" })}
         >
-          {settings.theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
+          {settings.theme === "dark" ? <Sun size={24} /> : <Moon size={24} />}
         </ToolButton>
 
         <ToolButton
           title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
           onClick={toggleFullscreen}
         >
-          {isFullscreen ? <Minimize2 size={15} /> : <Maximize2 size={15} />}
+          {isFullscreen ? <Minimize2 size={24} /> : <Maximize2 size={24} />}
         </ToolButton>
 
-        <ToolButton title="Change layout" onClick={() => setShowLayouts(true)}>
-          <LayoutGrid size={15} />
+        <ToolButton title="Themes" onClick={() => setShowLayouts(true)}>
+          <PaintRoller size={24} />
         </ToolButton>
 
         <ToolButton title="Change timezone" onClick={() => setShowTimezone(true)}>
-          <Globe size={15} />
+          <Globe size={24} />
         </ToolButton>
       </div>
 
@@ -129,8 +129,8 @@ function ToolButton({
       title={title}
       aria-label={title}
       style={{
-        width: "2.25rem",
-        height: "2.25rem",
+        width: "2.5rem",
+        height: "2.5rem",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

@@ -34,7 +34,7 @@ export function ClockMinimal({ clock, preview }: Props) {
         }}
       >
         {clock.hours}:{clock.minutes}
-        <span style={{ color: "var(--ck-muted)" }}>:{clock.seconds}</span>
+        <span style={{ color: "var(--ck-muted)", opacity: ".6" }}>:{clock.seconds}</span>
       </div>
 
       {/* Date + timezone — hidden in preview cards */}

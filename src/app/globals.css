@@ -15,11 +15,11 @@
 :root {
   --ck-bg: #0a0a0a;
   --ck-text: #ffffff;
-  --ck-muted: rgba(255, 255, 255, 0.28);
-  --ck-surface: rgba(255, 255, 255, 0.06);
-  --ck-border: rgba(255, 255, 255, 0.08);
-  --ck-icon: rgba(255, 255, 255, 0.45);
-  --ck-icon-hover: rgba(255, 255, 255, 0.9);
+  --ck-muted: #ffffff83;
+  --ck-surface: #ffffff0f;
+  --ck-border: #ffffff14;
+  --ck-icon: #ffffff73;
+  --ck-icon-hover: #ffffffe6;
 }
 
 /* ============================================================
@@ -29,22 +29,22 @@
 [data-theme="dark"][data-clock="minimal"] {
   --ck-bg: #0a0a0a;
   --ck-text: #ffffff;
-  --ck-muted: rgba(255, 255, 255, 0.28);
-  --ck-surface: rgba(255, 255, 255, 0.06);
-  --ck-border: rgba(255, 255, 255, 0.08);
-  --ck-icon: rgba(255, 255, 255, 0.45);
-  --ck-icon-hover: rgba(255, 255, 255, 0.9);
+  --ck-muted: #ffffff83;
+  --ck-surface: #ffffff0f;
+  --ck-border: #ffffff14;
+  --ck-icon: #ffffff73;
+  --ck-icon-hover: #ffffffe6;
 }
 
 /* MINIMAL — light */
 [data-theme="light"][data-clock="minimal"] {
   --ck-bg: #f2f2f2;
   --ck-text: #0a0a0a;
-  --ck-muted: rgba(0, 0, 0, 0.32);
-  --ck-surface: rgba(0, 0, 0, 0.05);
-  --ck-border: rgba(0, 0, 0, 0.09);
-  --ck-icon: rgba(0, 0, 0, 0.4);
-  --ck-icon-hover: rgba(0, 0, 0, 0.85);
+  --ck-muted: #00000052;
+  --ck-surface: #0000000d;
+  --ck-border: #00000017;
+  --ck-icon: #00000066;
+  --ck-icon-hover: #000000d9;
 }
 
 /* ============================================================

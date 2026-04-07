@@ -82,6 +82,7 @@ export function TimezoneModal({ open, onClose, current, onSelect }: Props) {
                 pointerEvents: "all",
                 width: "min(420px, 92vw)",
                 maxHeight: "68vh",
+                height: "575px",
                 display: "flex",
                 flexDirection: "column",
                 background: "var(--ck-bg)",
@@ -105,7 +106,7 @@ export function TimezoneModal({ open, onClose, current, onSelect }: Props) {
                     fontSize: "0.7rem",
                     letterSpacing: "0.2em",
                     textTransform: "uppercase",
-                    color: "var(--ck-muted)",
+                    color: "var(--ck-text)",
                   }}
                 >
                   Timezone
@@ -163,7 +164,7 @@ export function TimezoneModal({ open, onClose, current, onSelect }: Props) {
                     style={{
                       padding: "2rem 1.4rem",
                       textAlign: "center",
-                      color: "var(--ck-muted)",
+                      color: "var(--ck-text)",
                       fontSize: "0.8rem",
                       fontFamily: "var(--font-inter, system-ui)",
                     }}
@@ -196,7 +197,7 @@ export function TimezoneModal({ open, onClose, current, onSelect }: Props) {
                         <span
                           style={{
                             fontSize: "0.875rem",
-                            color: selected ? "var(--ck-text)" : "var(--ck-muted)",
+                            color: selected ? "var(--ck-text)" : "var(--ck-text)",
                           }}
                         >
                           {tz.label}
