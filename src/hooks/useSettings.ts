@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import type { ClockLayout } from "@/lib/clockLayouts";
 
+export type { ClockLayout };
 export type Theme = "light" | "dark";
-export type ClockLayout = "minimal";
 
 export interface Settings {
   theme: Theme;

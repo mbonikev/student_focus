@@ -1,26 +1,5 @@
 "use client";
 
-/**
- * CLOCK TEMPLATE — duplicate this file to create a new clock layout.
- *
- * Steps to wire it up (2 steps total):
- *  1. Rename this file and the exported function (e.g. ClockNeon / ClockNeon.tsx)
- *  2. Open src/lib/clockLayouts.ts and add one entry to the registry:
- *
- *       import { ClockNeon } from "@/components/clocks/ClockNeon";
- *
- *       // Fixed look regardless of light/dark mode:
- *       { id: "neon" as const, label: "Neon", Component: ClockNeon,
- *         vars: oneTheme({ "--ck-bg": "#...", "--ck-text": "#...", ... }) }
- *
- *       // Different look per mode:
- *       { id: "neon" as const, label: "Neon", Component: ClockNeon,
- *         vars: { dark: { "--ck-bg": "#...", ... }, light: { "--ck-bg": "#...", ... } } }
- *
- * That's it — the type, drawer preview, CSS variables, and active render
- * are all derived from the registry automatically.
- */
-
 import type { ClockData } from "@/hooks/useClockTime";
 
 interface Props {
@@ -31,7 +10,7 @@ interface Props {
   showDate?: boolean;
 }
 
-export function ClockTemplate({ clock, preview, showDate = true }: Props) {
+export function ClockMidnight({ clock, preview, showDate = true }: Props) {
   return (
     <div
       style={{
@@ -44,22 +23,28 @@ export function ClockTemplate({ clock, preview, showDate = true }: Props) {
         justifyContent: "center",
         background: "var(--ck-bg)",
         userSelect: "none",
+        position: "relative",
       }}
     >
+      <img src="/backgrounds/midnight2.jpg" alt="" className="midnight" />
       {/* ── Time ─────────────────────────────────────────────── */}
       <div
         style={{
           fontFamily: "var(--font-sp-display, system-ui)",
           fontSize: "min(26cqw, 28cqh)",
           fontWeight: 600,
-          letterSpacing: "0em",
+          letterSpacing: "0",
           lineHeight: 1,
           color: "var(--ck-text)",
           fontVariantNumeric: "tabular-nums",
+          zIndex: "2",
+          // opacity: "0.8",
+          textShadow: "0 0 40px rgba(0,0,0,0.1), 0 5px 20px rgba(0,0,0,0.1)",
+          // filter: "blur(1px)",
         }}
       >
         {clock.hours}:{clock.minutes}
-        <span style={{ color: "var(--ck-muted)", opacity: 0.6 }}>
+        <span style={{ color: "var(--ck-text)", opacity: 0.7 }}>
           :{clock.seconds}
         </span>
       </div>

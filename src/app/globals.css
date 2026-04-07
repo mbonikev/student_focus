@@ -91,31 +91,6 @@
 }
 
 /* ============================================================
-   MINIMAL — dark
-   Add a new block like this for every new layout you create.
-   ============================================================ */
-[data-theme="dark"][data-clock="minimal"] {
-  --ck-bg: #0a0a0a;
-  --ck-text: #ffffff;
-  --ck-muted: #ffffff83;
-  --ck-surface: #ffffff0f;
-  --ck-border: #ffffff14;
-  --ck-icon: #ffffff73;
-  --ck-icon-hover: #ffffffe6;
-}
-
-/* MINIMAL — light */
-[data-theme="light"][data-clock="minimal"] {
-  --ck-bg: #f2f2f2;
-  --ck-text: #0a0a0a;
-  --ck-muted: #000000ae;
-  --ck-surface: #0000000d;
-  --ck-border: #00000017;
-  --ck-icon: #00000066;
-  --ck-icon-hover: #000000d9;
-}
-
-/* ============================================================
    BASE STYLES
    ============================================================ */
 * {
@@ -185,4 +160,15 @@ body * {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+
+/* ============================================================
+   MIDNIGHT THEME
+   ============================================================ */
+
+.midnight{
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }

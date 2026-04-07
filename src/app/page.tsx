@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Sun, Moon, Maximize2, Minimize2, Globe, Settings, Paintbrush } from "lucide-react";
 import { useSettings } from "@/hooks/useSettings";
 import { useClockTime } from "@/hooks/useClockTime";
-import { ClockMinimal } from "@/components/clocks/ClockMinimal";
+import { CLOCK_LAYOUTS } from "@/lib/clockLayouts";
 import { LayoutDrawer } from "@/components/LayoutDrawer";
 import { TimezoneModal } from "@/components/TimezoneModal";
 import { SettingsModal } from "@/components/SettingsModal";
@@ -22,11 +22,18 @@ export default function Page() {
   const toolbarRef = useRef<HTMLDivElement>(null);
   const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Apply data-theme and data-clock to <html> so CSS variables resolve correctly
+  // Apply CSS variables and data attributes to <html> for the active layout + theme
   useEffect(() => {
     if (!mounted) return;
     document.documentElement.dataset.theme = settings.theme;
     document.documentElement.dataset.clock = settings.clockLayout;
+    const layout = CLOCK_LAYOUTS.find((l) => l.id === settings.clockLayout);
+    if (layout) {
+      const vars = layout.vars[settings.theme];
+      Object.entries(vars).forEach(([key, val]) => {
+        document.documentElement.style.setProperty(key, val);
+      });
+    }
   }, [settings.theme, settings.clockLayout, mounted]);
 
   // Track fullscreen state — API fullscreen and F11 fullscreen separately
@@ -98,10 +105,14 @@ export default function Page() {
     return <div style={{ width: "100vw", height: "100vh", background: "var(--ck-bg)" }} />;
   }
 
+  const ActiveClock =
+    CLOCK_LAYOUTS.find((l) => l.id === settings.clockLayout)?.Component ??
+    CLOCK_LAYOUTS[0].Component;
+
   return (
     <div style={{ width: "100vw", height: "100vh", position: "relative", overflow: "hidden" }}>
       {/* Clock */}
-      <ClockMinimal clock={clock} showDate={settings.showDate} />
+      <ActiveClock clock={clock} showDate={settings.showDate} />
 
       {/* Floating toolbar — bottom-center */}
       <div
@@ -207,6 +218,7 @@ function ToolButton({
         border: "1px solid var(--ck-border)",
         color: "var(--ck-icon)",
         cursor: "pointer",
+        backdropFilter: "blur(5px)",
       }}
       onMouseEnter={(e) => {
         (e.currentTarget as HTMLButtonElement).style.color = "var(--ck-icon-hover)";

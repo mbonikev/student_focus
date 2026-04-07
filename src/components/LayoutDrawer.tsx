@@ -4,33 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import type { ClockLayout, Theme } from "@/hooks/useSettings";
 import type { ClockData } from "@/hooks/useClockTime";
-import { ClockMinimal } from "./clocks/ClockMinimal";
+import { CLOCK_LAYOUTS } from "@/lib/clockLayouts";
 import React from "react";
-
-/* ------------------------------------------------------------------
-   Per-layout CSS custom property overrides for preview thumbnails.
-   Add a new entry here when you add a new clock layout.
-   ------------------------------------------------------------------ */
-const PREVIEW_VARS: Record<ClockLayout, Record<Theme, Record<string, string>>> = {
-  minimal: {
-    dark: {
-      "--ck-bg": "#0a0a0a",
-      "--ck-text": "#ffffff",
-      "--ck-muted": "rgba(255,255,255,0.28)",
-      "--ck-scan": "transparent",
-    },
-    light: {
-      "--ck-bg": "#f2f2f2",
-      "--ck-text": "#0a0a0a",
-      "--ck-muted": "rgba(0,0,0,0.32)",
-      "--ck-scan": "transparent",
-    },
-  },
-};
-
-const LAYOUTS: { id: ClockLayout; label: string; Component: React.ComponentType<{ clock: ClockData; preview?: boolean }> }[] = [
-  { id: "minimal", label: "Minimal", Component: ClockMinimal },
-];
 
 interface Props {
   open: boolean;
@@ -120,8 +95,8 @@ export function LayoutDrawer({ open, onClose, current, onSelect, clock, theme }:
 
             {/* Previews */}
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-              {LAYOUTS.map(({ id, label, Component }) => {
-                const vars = PREVIEW_VARS[id][theme];
+              {CLOCK_LAYOUTS.map(({ id, label, Component, vars: layoutVars }) => {
+                const vars = layoutVars[theme];
                 const active = current === id;
 
                 return (
