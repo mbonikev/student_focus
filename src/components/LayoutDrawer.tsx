@@ -28,7 +28,7 @@ const PREVIEW_VARS: Record<ClockLayout, Record<Theme, Record<string, string>>> =
   },
 };
 
-const LAYOUTS: { id: ClockLayout; label: string; Component: React.ComponentType<{ clock: ClockData }> }[] = [
+const LAYOUTS: { id: ClockLayout; label: string; Component: React.ComponentType<{ clock: ClockData; preview?: boolean }> }[] = [
   { id: "minimal", label: "Minimal", Component: ClockMinimal },
 ];
 
@@ -141,7 +141,7 @@ export function LayoutDrawer({ open, onClose, current, onSelect, clock, theme }:
                     }}
                   >
                     <div style={{ width: "100%", height: "100%", pointerEvents: "none" }}>
-                      <Component clock={clock} />
+                      <Component clock={clock} preview />
                     </div>
 
                     <div

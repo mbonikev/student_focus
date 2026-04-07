@@ -4,9 +4,10 @@ import type { ClockData } from "@/hooks/useClockTime";
 
 interface Props {
   clock: ClockData;
+  preview?: boolean;
 }
 
-export function ClockMinimal({ clock }: Props) {
+export function ClockMinimal({ clock, preview }: Props) {
   return (
     <div
       style={{
@@ -36,27 +37,30 @@ export function ClockMinimal({ clock }: Props) {
         <span style={{ color: "var(--ck-muted)" }}>:{clock.seconds}</span>
       </div>
 
-      {/* Date + timezone */}
-      <div
-        style={{
-          fontFamily: "var(--font-inter, system-ui)",
-          fontSize: "clamp(8px, min(1.6cqw, 1.4cqh), 16px)",
-          color: "var(--ck-muted)",
-          letterSpacing: "0.22em",
-          textTransform: "uppercase",
-          marginTop: "min(3cqh, 2.5cqw)",
-          textAlign: "center",
-          lineHeight: 1.7,
-        }}
-      >
-        {clock.day} · {clock.month} {clock.date}, {clock.year}
-        {clock.timezoneLabel && (
-          <>
-            <br />
-            {clock.timezoneLabel}
-          </>
-        )}
-      </div>
+      {/* Date + timezone — hidden in preview cards */}
+      {!preview && (
+        <div
+          style={{
+            fontFamily: "var(--font-inter, system-ui)",
+            fontSize: "clamp(11px, min(2cqw, 1.8cqh), 18px)",
+            color: "var(--ck-text)",
+            opacity: 0.55,
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            marginTop: "min(3cqh, 2.5cqw)",
+            textAlign: "center",
+            lineHeight: 1.8,
+          }}
+        >
+          {clock.day} · {clock.month} {clock.date}, {clock.year}
+          {clock.timezoneLabel && (
+            <>
+              <br />
+              {clock.timezoneLabel}
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 }
