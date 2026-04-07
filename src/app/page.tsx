@@ -54,9 +54,10 @@ export default function Page() {
         style={{
           position: "fixed",
           bottom: "1.75rem",
-          right: "1.75rem",
+          left: "50%",
+          transform: "translateX(-50%)",
           display: "flex",
-          flexDirection: "column",
+          flexDirection: "row",
           gap: "0.45rem",
           zIndex: 50,
         }}
