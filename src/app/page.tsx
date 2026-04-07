@@ -2,12 +2,13 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Sun, Moon, Maximize2, Minimize2, LayoutGrid, Globe, PaintBucket, PaintRoller } from "lucide-react";
+import { Sun, Moon, Maximize2, Minimize2, LayoutGrid, Globe, PaintBucket, PaintRoller, Settings } from "lucide-react";
 import { useSettings } from "@/hooks/useSettings";
 import { useClockTime } from "@/hooks/useClockTime";
 import { ClockMinimal } from "@/components/clocks/ClockMinimal";
 import { LayoutDrawer } from "@/components/LayoutDrawer";
 import { TimezoneModal } from "@/components/TimezoneModal";
+import { SettingsModal } from "@/components/SettingsModal";
 import type React from "react";
 
 export default function Page() {
@@ -15,6 +16,7 @@ export default function Page() {
   const clock = useClockTime(settings.timezone);
   const [showLayouts, setShowLayouts] = useState(false);
   const [showTimezone, setShowTimezone] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   // Apply data-theme and data-clock to <html> so CSS variables resolve correctly
@@ -47,7 +49,7 @@ export default function Page() {
   return (
     <div style={{ width: "100vw", height: "100vh", position: "relative", overflow: "hidden" }}>
       {/* Clock */}
-      <ClockMinimal clock={clock} />
+      <ClockMinimal clock={clock} showDate={settings.showDate} />
 
       {/* Floating toolbar — bottom-right */}
       <div
@@ -83,6 +85,10 @@ export default function Page() {
         <ToolButton title="Change timezone" onClick={() => setShowTimezone(true)}>
           <Globe size={24} />
         </ToolButton>
+
+        <ToolButton title="Settings" onClick={() => setShowSettings(true)}>
+          <Settings size={24} />
+        </ToolButton>
       </div>
 
       {/* Layout selection drawer */}
@@ -104,6 +110,14 @@ export default function Page() {
         onClose={() => setShowTimezone(false)}
         current={settings.timezone}
         onSelect={(tz) => update({ timezone: tz })}
+      />
+
+      {/* Settings modal */}
+      <SettingsModal
+        open={showSettings}
+        onClose={() => setShowSettings(false)}
+        settings={settings}
+        update={update}
       />
     </div>
   );

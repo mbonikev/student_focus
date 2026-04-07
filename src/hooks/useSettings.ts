@@ -9,6 +9,7 @@ export interface Settings {
   theme: Theme;
   clockLayout: ClockLayout;
   timezone: string;
+  showDate: boolean;
 }
 
 const STORAGE_KEY = "special-clocks";
@@ -17,6 +18,7 @@ const DEFAULT: Settings = {
   theme: "dark",
   clockLayout: "minimal",
   timezone: "UTC",
+  showDate: true,
 };
 
 export function useSettings() {

@@ -5,9 +5,10 @@ import type { ClockData } from "@/hooks/useClockTime";
 interface Props {
   clock: ClockData;
   preview?: boolean;
+  showDate?: boolean;
 }
 
-export function ClockMinimal({ clock, preview }: Props) {
+export function ClockMinimal({ clock, preview, showDate = true }: Props) {
   return (
     <div
       style={{
@@ -37,8 +38,8 @@ export function ClockMinimal({ clock, preview }: Props) {
         <span style={{ color: "var(--ck-muted)", opacity: ".6" }}>:{clock.seconds}</span>
       </div>
 
-      {/* Date + timezone — hidden in preview cards */}
-      {!preview && (
+      {/* Date + timezone — hidden in preview cards or when showDate is off */}
+      {!preview && showDate && (
         <div
           style={{
             fontFamily: "var(--font-inter, system-ui)",
@@ -53,12 +54,12 @@ export function ClockMinimal({ clock, preview }: Props) {
           }}
         >
           {clock.day} · {clock.month} {clock.date}, {clock.year}
-          {clock.timezoneLabel && (
+          {/* {clock.timezoneLabel && (
             <>
               <br />
               {clock.timezoneLabel}
             </>
-          )}
+          )} */}
         </div>
       )}
     </div>
